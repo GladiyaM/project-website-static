@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 </head>
 <body>
 
@@ -156,6 +157,11 @@
         <li><strong>Gateway:</strong> FastAPI reverse proxy with authentication and rate limiting.</li>
         <li><strong>Frontend:</strong> Next.js web application for document upload, Q&amp;A, and feedback collection.</li>
       </ul>
+
+      <h3 style="margin-top:2rem;">System Architecture</h3>
+      <div class="mermaid-wrapper">
+        <div id="architecture-diagram"></div>
+      </div>
     </div>
 
     <div class="domain-panel" id="panel-tech">
@@ -518,6 +524,60 @@
      SCRIPTS
      ═══════════════════════════════════════════════════════ -->
 <script>
+// Initialize Mermaid and render architecture diagram
+mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
+
+const diagramDef = `flowchart TD
+    User["User"]
+
+    subgraph System["Document AI System"]
+        Frontend["Web Interface"]
+        Gateway["Front Door\\n(Receives all requests)"]
+
+        subgraph Agents["AI Workers"]
+            IDPO["Orchestrator\\n(Plans and coordinates work)"]
+            AHMN["Document Reader\\n(Reads and understands documents)"]
+            XAI["QA Engine\\n(Answers questions and\\nexplains its reasoning)"]
+            Guardrails["Safety Checker\\n(Catches errors and\\nprotects sensitive info)"]
+        end
+
+        subgraph Storage["Memory"]
+            DB["Database\\n(Stores documents and history)"]
+            Cache["Cache\\n(Speeds up repeat lookups)"]
+        end
+    end
+
+    User -->|"Asks a question\\nor uploads a document"| Frontend
+    Frontend -->|"Sends request"| Gateway
+    Gateway -->|"Routes work"| IDPO
+    IDPO -->|"1. Read the document"| AHMN
+    IDPO -->|"2. Generate an answer\\nand explain why"| XAI
+    IDPO -->|"3. Check the answer\\nis safe and accurate"| Guardrails
+    Gateway -->|"Returns the answer\\nwith explanation"| Frontend
+    Frontend -->|"Shows the answer"| User
+
+    AHMN <-->|"Store and retrieve\\ndocuments"| DB
+    Gateway <-->|"Speed up\\nfrequent requests"| Cache
+    XAI <-->|"Log results"| DB
+    Guardrails <-->|"Log safety checks"| DB
+
+    style User fill:#E8F5E9,stroke:#4CAF50,color:#000
+    style Frontend fill:#E3F2FD,stroke:#2196F3,color:#000
+    style Gateway fill:#FFF3E0,stroke:#FF9800,color:#000
+    style IDPO fill:#F3E5F5,stroke:#9C27B0,color:#000
+    style AHMN fill:#E8F5E9,stroke:#4CAF50,color:#000
+    style XAI fill:#FFF9C4,stroke:#FBC02D,color:#000
+    style Guardrails fill:#FFEBEE,stroke:#F44336,color:#000
+    style DB fill:#ECEFF1,stroke:#607D8B,color:#000
+    style Cache fill:#ECEFF1,stroke:#607D8B,color:#000
+    style Agents fill:#F5F5F5,stroke:#9E9E9E,color:#000
+    style Storage fill:#F5F5F5,stroke:#9E9E9E,color:#000
+    style System fill:#FAFAFA,stroke:#BDBDBD,color:#000`;
+
+mermaid.render('mermaid-svg', diagramDef).then(function(result) {
+  document.getElementById('architecture-diagram').innerHTML = result.svg;
+});
+
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
