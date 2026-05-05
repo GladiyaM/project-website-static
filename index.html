@@ -491,10 +491,13 @@
       </div>
 
       <div>
-        <form class="contact-form" onsubmit="handleContact(event)">
-          <input type="email" id="contactEmail" placeholder="Your Email" required>
-          <input type="text" id="contactSubject" placeholder="Subject">
-          <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+        <form class="contact-form" action="https://formsubmit.co/IT22335050@my.sliit.lk" method="POST">
+          <input type="hidden" name="_subject" value="New message from ModAI Website">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" placeholder="Your Message" required></textarea>
           <button type="submit" class="btn">Send Message &#8594;</button>
         </form>
       </div>
@@ -623,17 +626,7 @@ document.querySelectorAll('.domain-tab').forEach(tab => {
   });
 });
 
-// Contact form handler (placeholder)
-function handleContact(e) {
-  e.preventDefault();
-  const email = document.getElementById('contactEmail').value;
-  const subject = document.getElementById('contactSubject').value || 'Website Contact';
-  const message = document.getElementById('contactMessage').value;
-  const body = 'From: ' + email + '\n\n' + message;
-  const mailtoLink = 'mailto:IT22335050@my.sliit.lk?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-  window.open(mailtoLink, '_blank');
-  e.target.reset();
-}
+
 </script>
 
 </body>
