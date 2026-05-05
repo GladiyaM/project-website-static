@@ -57,7 +57,7 @@
         </div>
         <div class="hero-meta-item">
           <span class="label">Co-Supervisor</span>
-          <span class="value">Ms. Lakmini Abeywardhana</span>
+          <span class="value">Dr. Lakmini Abeywardhana</span>
         </div>
         <div class="hero-meta-item">
           <span class="label">Group</span>
@@ -371,7 +371,7 @@
           <h4>Final Presentation</h4>
           <p>Final project demonstration and defence slides</p>
         </div>
-        <a href="#" class="doc-link pending">Coming Soon</a>
+        <a href="25-26J-129_Final_Presentation.pptx" class="doc-link" download="25-26J-129_Final_Presentation.pptx">&#8659; Download</a>
       </li>
     </ul>
   </div>
@@ -432,7 +432,7 @@
       <div class="card supervisor-card">
         <div class="supervisor-avatar">LA</div>
         <div class="supervisor-info">
-          <h3>Ms. Lakmini Abeywardhana</h3>
+          <h3>Dr. Lakmini Abeywardhana</h3>
           <p>Co-Supervisor</p>
         </div>
       </div>
@@ -627,8 +627,14 @@ document.querySelectorAll('.domain-tab').forEach(tab => {
 // Contact form handler (placeholder)
 function handleContact(e) {
   e.preventDefault();
-  alert('Thank you for your message! We will get back to you soon.');
-  e.target.reset();
+  const form = e.target;
+  const name = form.querySelector('input[placeholder="Your Name"]').value;
+  const email = form.querySelector('input[placeholder="Your Email"]').value;
+  const subject = form.querySelector('input[placeholder="Subject"]').value || 'Website Contact';
+  const message = form.querySelector('textarea').value;
+  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+  window.location.href = `mailto:IT22335050@my.sliit.lk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  form.reset();
 }
 </script>
 
